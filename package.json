@@ -1,0 +1,35 @@
+{
+  "name": "lens-video-converter",
+  "version": "1.0.0",
+  "description": "Desktop video converter using FFmpeg WASM",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "test": "jest"
+  },
+  "build": {
+    "appId": "com.lens.videoconverter",
+    "productName": "Lens Converter",
+    "asarUnpack": [
+      "**/node_modules/ffmpeg-static/ffmpeg.exe"
+    ],
+    "directories": {
+      "output": "dist"
+    },
+    "win": {
+      "target": "nsis"
+    }
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "electron": "^29.1.0",
+    "electron-builder": "^24.13.3",
+    "jest": "^30.3.0"
+  },
+  "dependencies": {
+    "ffmpeg-static": "^5.3.0"
+  }
+}

@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Lens — Video Converter</title>
+  <link
+    href="https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,200;0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&family=DM+Serif+Display:ital@0;1&display=swap"
+    rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <div class="bg"></div>
+
+  <!-- Loading -->
+  <div id="loading-screen">
+    <div class="loading-glass">
+      <div class="loading-title">Lens</div>
+      <div class="loading-track">
+        <div class="loading-fill"></div>
+      </div>
+      <div class="loading-msg" id="loading-text">Loading FFmpeg engine…</div>
+    </div>
+  </div>
+
+  <!-- App -->
+  <div id="app">
+    <header>
+      <div class="logo-island">
+        <div class="logo">Convertor</div>
+      </div>
+      <div class="header-right">
+        <div class="metrics-chip" id="gpu-chip">
+          <canvas id="gpu-graph"></canvas>
+          <div class="chip-content">
+            <span class="gpu-label" id="gpu-lbl">GPU</span>
+            <span class="gpu-pct" id="gpu-pct">-%</span>
+          </div>
+        </div>
+        <div class="status-chip">
+          <div class="dot" id="dot"></div>
+          <span id="status-txt">Initializing</span>
+        </div>
+      </div>
+    </header>
+
+    <main>
+      <div class="left">
+        <input type="file" id="fi" accept="video/*,.mkv,.flv,.wmv,.avi,.mov,.webm,.m4v" multiple style="display:none">
+
+        <div class="queue-wrap" id="dz">
+          <div class="queue-header">
+            <div class="label" style="margin:0; display:flex; align-items:center;">
+              <button class="icon-btn add-btn" onclick="document.getElementById('fi').click()"
+                title="Add Files">＋</button>
+              Queue
+            </div>
+            <span class="queue-count" id="q-count">0 files</span>
+            <button class="clear-link" onclick="clearAll()">Clear all</button>
+          </div>
+          <div class="file-list" id="file-list">
+            <div class="empty-msg" id="empty-msg">No files added yet — click ＋ or drop here ✦</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="neon-glow-wrap right-wrap">
+        <div class="right">
+          <div class="settings-title"><span style="font-style: normal;">⚙</span> Settings</div>
+
+
+
+          <div class="setting">
+            <div class="setting-label">Output Format</div>
+            <div class="sel-wrap">
+              <select id="fmt">
+                <option value="mp4">MP4 — H.264/AAC</option>
+                <option value="mov">MOV — QuickTime</option>
+                <option value="webm">WEBM — VP9/Opus</option>
+                <option value="avi">AVI — DivX</option>
+                <option value="mkv">MKV — Matroska</option>
+                <option value="gif">GIF — Animated</option>
+                <option value="mp3">MP3 — Audio Only</option>
+                <option value="aac">AAC — Audio Only</option>
+                <option value="wav">WAV — Lossless Audio</option>
+              </select>
+              <span class="sel-arr">▾</span>
+            </div>
+          </div>
+
+          <div class="setting" id="res-row">
+            <div class="setting-label">Resolution</div>
+            <div class="sel-wrap">
+              <select id="res">
+                <option value="">Keep Original</option>
+                <option value="3840:2160">4K — 3840×2160</option>
+                <option value="1920:1080">1080p — 1920×1080</option>
+                <option value="1280:720">720p — 1280×720</option>
+                <option value="854:480">480p — 854×480</option>
+                <option value="640:360">360p — 640×360</option>
+                <option value="426:240">240p — 426×240</option>
+              </select>
+              <span class="sel-arr">▾</span>
+            </div>
+          </div>
+
+          <div class="setting" id="fps-row">
+            <div class="setting-label">Frame Rate</div>
+            <div class="sel-wrap">
+              <select id="fps">
+                <option value="">Keep Original</option>
+                <option value="60">60 fps</option>
+                <option value="30">30 fps</option>
+                <option value="29.97">29.97 fps (NTSC)</option>
+                <option value="25">25 fps (PAL)</option>
+                <option value="24">24 fps (Cinema)</option>
+                <option value="15">15 fps</option>
+                <option value="10">10 fps</option>
+              </select>
+              <span class="sel-arr">▾</span>
+            </div>
+          </div>
+
+          <div class="setting" id="vcodec-row">
+            <div class="setting-label">Video Codec</div>
+            <div class="sel-wrap">
+              <select id="vcodec">
+                <option value="h264_nvenc">H.264 (NVIDIA GPU 🚀)</option>
+                <option value="hevc_nvenc">HEVC (NVIDIA GPU 🚀)</option>
+                <option value="libx264">H.264 (CPU)</option>
+                <option value="libx265">HEVC (CPU)</option>
+                <option value="libvpx-vp9">VP9 (CPU)</option>
+                <option value="mpeg4">MPEG-4 (CPU)</option>
+                <option value="copy">Copy — No Re-encode</option>
+              </select>
+              <span class="sel-arr">▾</span>
+            </div>
+          </div>
+
+          <div class="setting" id="acodec-row">
+            <div class="setting-label">Audio Codec</div>
+            <div class="sel-wrap">
+              <select id="acodec">
+                <option value="aac">AAC</option>
+                <option value="libmp3lame">MP3</option>
+                <option value="libopus">Opus</option>
+                <option value="copy">Copy — No Re-encode</option>
+                <option value="none">Strip Audio</option>
+              </select>
+              <span class="sel-arr">▾</span>
+            </div>
+          </div>
+
+          <div class="setting">
+            <div class="slider-row">
+              <div class="setting-label" style="margin:0">Quality (CRF)</div>
+              <span class="slider-val" id="crf-val">23</span>
+            </div>
+            <input type="range" id="crf" min="0" max="51" value="23" oninput="window.updateSlider(this.value)">
+            <div class="slider-hints"><span>Best (100%)</span><span>Balanced</span><span>Small (0%)</span></div>
+          </div>
+
+          <div class="neon-btn-wrap">
+            <button class="convert-btn" id="convert-btn" onclick="startConversion()" disabled>
+              Convert All
+            </button>
+          </div>
+        </div>
+      </div>
+    </main>
+    <div id="toast-container"></div>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+
+</html>
