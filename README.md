@@ -2,7 +2,7 @@
 
 **Lens Video Converter** is a premium, high-performance desktop application for seamless video conversion. Built with a stunning **Glassmorphism UI** and powered by the industrial-strength **FFmpeg** engine, Lens offers a state-of-the-art experience for both casual users and video professionals.
 
-![Lens Preview](wall.png)
+![Lens Preview](1.png)
 
 ---
 
