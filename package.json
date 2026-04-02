@@ -1,7 +1,7 @@
 {
   "name": "lens-video-converter",
   "version": "1.0.0",
-  "description": "Desktop video converter using FFmpeg WASM",
+  "description": "Lens Video Converter: A beautiful, high-performance desktop video conversion engine featuring Glassmorphism UI and hardware-accelerated processing.",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
